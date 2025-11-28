@@ -1,0 +1,35 @@
+{
+  "name": "regexp-simple-parser",
+  "repository": "github:fabiospampinato/regexp-simple-parser",
+  "description": "A simple and modern RegExp parser.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "benchmark": "tsex benchmark",
+    "benchmark:watch": "tsex benchmark --watch",
+    "clean": "tsex clean",
+    "compile": "tsex compile",
+    "compile:watch": "tsex compile --watch",
+    "test": "tsex test",
+    "test:watch": "tsex test --watch",
+    "prepublishOnly": "tsex prepare"
+  },
+  "keywords": [
+    "regexp",
+    "regex",
+    "modern",
+    "parser"
+  ],
+  "dependencies": {
+    "grammex": "^3.1.12"
+  },
+  "devDependencies": {
+    "benchloop": "^2.1.1",
+    "fava": "^0.3.5",
+    "tsex": "^4.0.2",
+    "typescript": "^5.9.3"
+  }
+}
