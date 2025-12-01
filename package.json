@@ -3,7 +3,7 @@
   "repository": "github:fabiospampinato/regexp-simple-parser",
   "description": "A simple and modern RegExp parser.",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
