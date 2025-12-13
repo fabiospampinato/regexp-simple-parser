@@ -232,54 +232,10 @@ type NodeReference = (
 
 /* MAIN - VALUE */
 
-type NodeValueBase = NodeBase & {
+type NodeValue = NodeBase & {
   type: 'value',
-  subtype: 'control-escape' | 'escape' | 'hexadecimal-escape' | 'null-escape' | 'octal-escape' | 'single-escape' | 'symbol' | 'unicode-escape',
   codePoint: number
 };
-
-type NodeValueControlEscape = NodeValueBase & {
-  subtype: 'control-escape'
-};
-
-type NodeValueEscape = NodeValueBase & {
-  subtype: 'escape'
-};
-
-type NodeValueHexadecimalEscape = NodeValueBase & {
-  subtype: 'hexadecimal-escape'
-};
-
-type NodeValueNullEscape = NodeValueBase & {
-  subtype: 'null-escape'
-};
-
-type NodeValueOctalEscape = NodeValueBase & {
-  subtype: 'octal-escape'
-};
-
-type NodeValueSingleEscape = NodeValueBase & {
-  subtype: 'single-escape'
-};
-
-type NodeValueSymbol = NodeValueBase & {
-  subtype: 'symbol'
-};
-
-type NodeValueUnicodeEscape = NodeValueBase & {
-  subtype: 'unicode-escape'
-};
-
-type NodeValue = (
-  NodeValueControlEscape |
-  NodeValueEscape |
-  NodeValueHexadecimalEscape |
-  NodeValueNullEscape |
-  NodeValueOctalEscape |
-  NodeValueSingleEscape |
-  NodeValueSymbol |
-  NodeValueUnicodeEscape
-);
 
 /* MAIN */
 
@@ -325,4 +281,4 @@ export type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLook
 export type {NodeProperty};
 export type {NodeQuantifier, NodeQuantifierOptional, NodeQuantifierPlus, NodeQuantifierStar, NodeQuantifierRange};
 export type {NodeReference, NodeReferenceIndex, NodeReferenceName};
-export type {NodeValue, NodeValueControlEscape, NodeValueEscape, NodeValueHexadecimalEscape, NodeValueNullEscape, NodeValueOctalEscape, NodeValueSingleEscape, NodeValueSymbol, NodeValueUnicodeEscape};
+export type {NodeValue};

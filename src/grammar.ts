@@ -18,7 +18,7 @@ import type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLook
 import type {NodeProperty} from './types';
 import type {NodeQuantifier, NodeQuantifierOptional, NodeQuantifierPlus, NodeQuantifierStar, NodeQuantifierRange} from './types';
 import type {NodeReference, NodeReferenceIndex, NodeReferenceName} from './types';
-import type {NodeValue, NodeValueControlEscape, NodeValueEscape, NodeValueHexadecimalEscape, NodeValueNullEscape, NodeValueOctalEscape, NodeValueSingleEscape, NodeValueSymbol, NodeValueUnicodeEscape} from './types';
+import type {NodeValue} from './types';
 
 /* MAIN */
 
@@ -45,11 +45,11 @@ const getGrammar = memoize ( ( flags: string ) => {
 
   const CharacterClassEscape = match<NodeCharacterClassEscape>( /\\([dDsSwW])/, ( _, $1 ) => ({ type: 'character-class-escape', value: $1 as NodeCharacterClassEscape['value'] }) ); //TSC
 
-  const CharacterClassSubstringValueSymbol = match<NodeValueSymbol>( u ? /[^\\\]\}]/u : /[^\\\]\}]/, _ => ({ type: 'value', subtype: 'symbol', codePoint: toCodePoint ( _ ) }) );
+  const CharacterClassSubstringValueSymbol = match<NodeValue>( u ? /[^\\\]\}]/u : /[^\\\]\}]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
   const CharacterClassSubstringChild = lazy<NodeCharacterClassDisjuctionChild>( () => or<NodeCharacterClassDisjuctionChild>([ CharacterClassEscape, Property, Value, CharacterClassSubstringValueSymbol ]) );
   const CharacterClassSubstring = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassSubstringChild, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassSubstringChild ]) ) ]) ), '}'], _ => ({ type: 'disjunction', children: _ }) ) : Unsupported;
 
-  const CharacterClassValueSymbol = match<NodeValueSymbol>( u ? /[^\\\]]/u : /[^\\\]]/, _ => ({ type: 'value', subtype: 'symbol', codePoint: toCodePoint ( _ ) }) );
+  const CharacterClassValueSymbol = match<NodeValue>( u ? /[^\\\]]/u : /[^\\\]]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
   const CharacterClassRangeChild = lazy<NodeValue> ( () => or<NodeValue>([ Value, CharacterClassValueSymbol ]) );
   const CharacterClassRange = and<NodeValue, NodeCharacterClassRange>( [CharacterClassRangeChild, '-', CharacterClassRangeChild], ([ $1, $2 ]) => ({ type: 'character-class-range', fromCodePoint: $1.codePoint, toCodePoint: $2.codePoint }) );
 
@@ -79,21 +79,21 @@ const getGrammar = memoize ( ( flags: string ) => {
     const referenceIndex = toInt ( match[1] );
     if ( referenceIndex <= referenceIndexMax ) return false;
     const codePoint = toInt ( match[1], 8 );
-    state.output.push ({ type: 'value', subtype: 'octal-escape', codePoint });
+    state.output.push ({ type: 'value', codePoint });
     state.index += match[0].length;
     return true;
   }) : Unsupported;
 
-  const ValueControlEscape = match<NodeValueControlEscape>( /\\c([a-zA-Z])/, ( _, $1 ) => ({ type: 'value', subtype: 'control-escape', codePoint: toCodePoint ( $1.toUpperCase () ) - 64 }) );
-  const ValueHexadecimalEscape = match<NodeValueHexadecimalEscape>( /\\x([0-9a-fA-F]{2})/, ( _, $1 ) => ({ type: 'value', subtype: 'hexadecimal-escape', codePoint: toInt ( $1, 16 ) }) );
-  const ValueOctalEscape = !u ? match<NodeValueOctalEscape>( /\\0([1-7][0-7]?)/, ( _, $1 ) => ({ type: 'value', subtype: 'octal-escape', codePoint: toInt ( $1, 8 ) }) ) : Unsupported;
-  const ValueNullEscape = match<NodeValueNullEscape>( /\\0/, () => ({ type: 'value', subtype: 'null-escape', codePoint: 0 }) );
-  const ValueSingleEscape = match<NodeValueSingleEscape>( /\\([bfnrtv])/, ( _, $1 ) => ({ type: 'value', subtype: 'single-escape', codePoint: toCodePoint ( SINGLE_ESCAPE_CHAR_MAP[$1] ) }) );
-  const ValueUnicodeEscape = match<NodeValueUnicodeEscape>( /\\u([0-9a-fA-F]{4})/, ( _, $1 ) => ({ type: 'value', subtype: 'unicode-escape', codePoint: toInt ( $1, 16 ) }) );
-  const ValueUnicodeCodePointEscape = u ? match<NodeValueUnicodeEscape>( /\\u\{([0-9a-fA-F]+)\}/, ( _, $1 ) => ({ type: 'value', subtype: 'unicode-escape', codePoint: toInt ( $1, 16 ) }) ) : Unsupported;
-  const ValueEscape = match<NodeValueEscape>( /\\(.)/, ( _, $1 ) => ({ type: 'value', subtype: 'escape', codePoint: toCodePoint ( $1 ) }) );
-  const ValueSymbolStrict = match<NodeValueSymbol>( u ? /[^^$.*+?(){}|\\\[\]]/u : /[^^$.*+?(){}|\\\[\]]/, _ => ({ type: 'value', subtype: 'symbol', codePoint: toCodePoint ( _ ) }) );
-  const ValueSymbolPermissive = match<NodeValueSymbol>( u ? /[^()|\\\[]/u : /[^()|\\\[]/, _ => ({ type: 'value', subtype: 'symbol', codePoint: toCodePoint ( _ ) }) ); //TODO: have a much closer look at this, which feels sketchy //TODO: Try to have fewer ValueSymbol rules
+  const ValueControlEscape = match<NodeValue>( /\\c([a-zA-Z])/, ( _, $1 ) => ({ type: 'value', codePoint: toCodePoint ( $1.toUpperCase () ) - 64 }) );
+  const ValueHexadecimalEscape = match<NodeValue>( /\\x([0-9a-fA-F]{2})/, ( _, $1 ) => ({ type: 'value', codePoint: toInt ( $1, 16 ) }) );
+  const ValueOctalEscape = !u ? match<NodeValue>( /\\0([1-7][0-7]?)/, ( _, $1 ) => ({ type: 'value', codePoint: toInt ( $1, 8 ) }) ) : Unsupported;
+  const ValueNullEscape = match<NodeValue>( /\\0/, () => ({ type: 'value', codePoint: 0 }) );
+  const ValueSingleEscape = match<NodeValue>( /\\([bfnrtv])/, ( _, $1 ) => ({ type: 'value', codePoint: toCodePoint ( SINGLE_ESCAPE_CHAR_MAP[$1] ) }) );
+  const ValueUnicodeEscape = match<NodeValue>( /\\u([0-9a-fA-F]{4})/, ( _, $1 ) => ({ type: 'value', codePoint: toInt ( $1, 16 ) }) );
+  const ValueUnicodeCodePointEscape = u ? match<NodeValue>( /\\u\{([0-9a-fA-F]+)\}/, ( _, $1 ) => ({ type: 'value', codePoint: toInt ( $1, 16 ) }) ) : Unsupported;
+  const ValueEscape = match<NodeValue>( /\\(.)/, ( _, $1 ) => ({ type: 'value', codePoint: toCodePoint ( $1 ) }) );
+  const ValueSymbolStrict = match<NodeValue>( u ? /[^^$.*+?(){}|\\\[\]]/u : /[^^$.*+?(){}|\\\[\]]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
+  const ValueSymbolPermissive = match<NodeValue>( u ? /[^()|\\\[]/u : /[^()|\\\[]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) ); //TODO: have a much closer look at this, which feels sketchy //TODO: Try to have fewer ValueSymbol rules
   const Value = or<NodeValue>([ ValueControlEscape, ValueHexadecimalEscape, ValueAmbiguousOctalEscape, ValueOctalEscape, ValueNullEscape, ValueSingleEscape, ValueUnicodeEscape, ValueUnicodeCodePointEscape, ValueEscape, ValueSymbolStrict ]);
 
   const Primitive = or<NodePrimitive>([ Anchor, CharacterClassEscape, CharacterClass, Dot, Property, ValueAmbiguousOctalEscape, Reference, Value ]);

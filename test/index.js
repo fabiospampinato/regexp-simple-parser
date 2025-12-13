@@ -25,17 +25,14 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'b'.codePointAt ( 0 )
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'c'.codePointAt ( 0 )
           }
         ]
@@ -46,7 +43,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           },
           {
@@ -58,12 +54,10 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 'b'.codePointAt ( 0 )
                   },
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 'c'.codePointAt ( 0 )
                   }
                 ]
@@ -72,7 +66,6 @@ describe ( 'RegExp Simple Parser', () => {
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'd'.codePointAt ( 0 )
           }
         ]
@@ -186,7 +179,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'single-escape',
                 codePoint: '\b'.codePointAt ( 0 )
               }
             ]
@@ -215,7 +207,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 97
                   }
                 ]
@@ -285,7 +276,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               }
             ]
@@ -303,12 +293,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -336,7 +324,6 @@ describe ( 'RegExp Simple Parser', () => {
               children: [
                 {
                   type: 'value',
-                  subtype: 'symbol',
                   codePoint: char.codePointAt ( 0 )
                 }
               ]
@@ -367,7 +354,6 @@ describe ( 'RegExp Simple Parser', () => {
               children: [
                 {
                   type: 'value',
-                  subtype: 'control-escape',
                   codePoint: ( i % 26 ) + 1
                 }
               ]
@@ -391,7 +377,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'escape',
                 codePoint: '\\'.codePointAt ( 0 )
               }
             ]
@@ -419,7 +404,6 @@ describe ( 'RegExp Simple Parser', () => {
               children: [
                 {
                   type: 'value',
-                  subtype: 'symbol',
                   codePoint: char.codePointAt ( 0 )
                 }
               ]
@@ -443,7 +427,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'hexadecimal-escape',
                 codePoint: 'a'.codePointAt ( 0 )
               }
             ]
@@ -465,7 +448,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'null-escape',
                 codePoint: 0
               }
             ]
@@ -493,7 +475,6 @@ describe ( 'RegExp Simple Parser', () => {
               children: [
                 {
                   type: 'value',
-                  subtype: 'single-escape',
                   codePoint: value.codePointAt ( 0 )
                 }
               ]
@@ -517,7 +498,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               }
             ]
@@ -539,7 +519,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'unicode-escape',
                 codePoint: '\u3042'.codePointAt ( 0 )
               }
             ]
@@ -557,7 +536,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'unicode-escape',
                 codePoint: '\u{1F600}'.codePointAt ( 0 )
               }
             ]
@@ -656,7 +634,6 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'control-escape',
               codePoint: ( i % 26 ) + 1
             }
           ]
@@ -675,7 +652,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'escape',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -688,7 +664,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'escape',
             codePoint: '\\'.codePointAt ( 0 )
           }
         ]
@@ -711,12 +686,10 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'a'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: char.codePointAt ( 0 )
             }
           ]
@@ -735,7 +708,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'hexadecimal-escape',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -752,7 +724,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'null-escape',
             codePoint: 0
           }
         ]
@@ -769,7 +740,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'octal-escape',
             codePoint: '5'.codePointAt ( 0 )
           }
         ]
@@ -782,7 +752,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'octal-escape',
             codePoint: '5'.codePointAt ( 0 )
           }
         ]
@@ -805,7 +774,6 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'single-escape',
               codePoint: value.codePointAt ( 0 )
             }
           ]
@@ -824,7 +792,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -841,7 +808,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'unicode-escape',
             codePoint: '\u3042'.codePointAt ( 0 )
           }
         ]
@@ -854,7 +820,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'unicode-escape',
             codePoint: '\u{1F600}'.codePointAt ( 0 )
           }
         ]
@@ -880,7 +845,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               }
             ]
@@ -892,7 +856,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -921,7 +884,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 97
                   }
                 ]
@@ -933,7 +895,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 98
                   }
                 ]
@@ -952,7 +913,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 99
                   }
                 ]
@@ -964,7 +924,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 100
                   }
                 ]
@@ -994,7 +953,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               }
             ]
@@ -1006,7 +964,6 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1035,7 +992,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 97
                   }
                 ]
@@ -1047,7 +1003,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 98
                   }
                 ]
@@ -1066,7 +1021,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 99
                   }
                 ]
@@ -1078,7 +1032,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 100
                   }
                 ]
@@ -1122,12 +1075,10 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'b'.codePointAt ( 0 )
           }
         ]
@@ -1138,7 +1089,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           },
           {
@@ -1150,12 +1100,10 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 'b'.codePointAt ( 0 )
                   },
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 'c'.codePointAt ( 0 )
                   }
                 ]
@@ -1164,7 +1112,6 @@ describe ( 'RegExp Simple Parser', () => {
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'd'.codePointAt ( 0 )
           }
         ]
@@ -1176,19 +1123,16 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /a|/, {
         type: 'value',
-        subtype: 'symbol',
         codePoint: 'a'.codePointAt ( 0 )
       });
 
       assert ( /|a/, {
         type: 'value',
-        subtype: 'symbol',
         codePoint: 'a'.codePointAt ( 0 )
       });
 
       assert ( /|||a|||/, {
         type: 'value',
-        subtype: 'symbol',
         codePoint: 'a'.codePointAt ( 0 )
       });
 
@@ -1213,7 +1157,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 97
           },
           {
@@ -1225,7 +1168,6 @@ describe ( 'RegExp Simple Parser', () => {
                 children: [
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 98
                   },
                   {
@@ -1237,12 +1179,10 @@ describe ( 'RegExp Simple Parser', () => {
                         children: [
                           {
                             type: 'value',
-                            subtype: 'symbol',
                             codePoint: 99
                           },
                           {
                             type: 'value',
-                            subtype: 'symbol',
                             codePoint: 100
                           }
                         ]
@@ -1251,7 +1191,6 @@ describe ( 'RegExp Simple Parser', () => {
                   },
                   {
                     type: 'value',
-                    subtype: 'symbol',
                     codePoint: 101
                    }
                 ]
@@ -1260,7 +1199,6 @@ describe ( 'RegExp Simple Parser', () => {
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 102
           }
         ]
@@ -1310,7 +1248,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1325,12 +1262,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1370,7 +1305,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1386,12 +1320,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1427,7 +1359,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1442,12 +1373,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1481,7 +1410,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1500,12 +1428,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1555,7 +1481,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1574,12 +1499,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1629,7 +1552,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1648,12 +1570,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1709,7 +1629,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1724,12 +1643,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1765,7 +1682,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1780,12 +1696,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1821,7 +1735,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1836,12 +1749,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1877,7 +1788,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1892,12 +1802,10 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'a'.codePointAt ( 0 )
               },
               {
                 type: 'value',
-                subtype: 'symbol',
                 codePoint: 'b'.codePointAt ( 0 )
               }
             ]
@@ -1948,7 +1856,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1963,7 +1870,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1982,7 +1888,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -1997,7 +1902,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2016,7 +1920,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2031,7 +1934,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2052,7 +1954,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2067,7 +1968,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2084,7 +1984,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2099,7 +1998,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2116,7 +2014,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2131,7 +2028,6 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 'a'.codePointAt ( 0 )
           }
         ]
@@ -2188,7 +2084,6 @@ describe ( 'RegExp Simple Parser', () => {
 
         assert ( re, {
           type: 'value',
-          subtype: 'control-escape',
           codePoint: ( i % 26 ) + 1
         });
 
@@ -2200,13 +2095,11 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /\a/, {
         type: 'value',
-        subtype: 'escape',
         codePoint: 'a'.codePointAt ( 0 )
       });
 
       assert ( /\\/, {
         type: 'value',
-        subtype: 'escape',
         codePoint: '\\'.codePointAt ( 0 )
       });
 
@@ -2216,7 +2109,6 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /\x61/, {
         type: 'value',
-        subtype: 'hexadecimal-escape',
         codePoint: 'a'.codePointAt ( 0 )
       });
 
@@ -2226,7 +2118,6 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /\0/, {
         type: 'value',
-        subtype: 'null-escape',
         codePoint: 0
       });
 
@@ -2236,13 +2127,11 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /\065/, {
         type: 'value',
-        subtype: 'octal-escape',
         codePoint: '5'.codePointAt ( 0 )
       });
 
       assert ( /\65/, {
         type: 'value',
-        subtype: 'octal-escape',
         codePoint: '5'.codePointAt ( 0 )
       });
 
@@ -2255,12 +2144,10 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'octal-escape',
             codePoint: parseInt ( '33', 8 )
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: '3'.codePointAt ( 0 )
           }
         ]
@@ -2271,12 +2158,10 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'octal-escape',
             codePoint: parseInt ( '333', 8 )
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: '3'.codePointAt ( 0 )
           }
         ]
@@ -2294,7 +2179,6 @@ describe ( 'RegExp Simple Parser', () => {
 
         assert ( re, {
           type: 'value',
-          subtype: 'single-escape',
           codePoint: value.codePointAt ( 0 )
         });
 
@@ -2306,7 +2190,6 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /a/, {
         type: 'value',
-        subtype: 'symbol',
         codePoint: 'a'.codePointAt ( 0 )
       });
 
@@ -2316,13 +2199,11 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /\u3042/, {
         type: 'value',
-        subtype: 'unicode-escape',
         codePoint: '\u3042'.codePointAt ( 0 )
       });
 
       assert ( /\u{1F600}/u, {
         type: 'value',
-        subtype: 'unicode-escape',
         codePoint: '\u{1F600}'.codePointAt ( 0 )
       });
 
@@ -2343,47 +2224,38 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'escape',
               codePoint: 'p'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '{'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'L'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'e'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 't'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 't'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'e'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'r'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '}'.codePointAt ( 0 )
             }
           ]
@@ -2398,42 +2270,34 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'escape',
               codePoint: 'u'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '{'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '1'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'F'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '6'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '0'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '0'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '}'.codePointAt ( 0 )
             }
           ]
@@ -2457,19 +2321,16 @@ describe ( 'RegExp Simple Parser', () => {
               children: [
                 {
                   type: 'value',
-                  subtype: 'symbol',
                   codePoint: '['.codePointAt ( 0 )
                 },
                 {
                   type: 'value',
-                  subtype: 'symbol',
                   codePoint: 'a'.codePointAt ( 0 )
                 }
               ]
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: ']'.codePointAt ( 0 )
             }
           ]
@@ -2486,22 +2347,18 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'a'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '&'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '&'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'b'.codePointAt ( 0 )
             }
           ]
@@ -2550,22 +2407,18 @@ describe ( 'RegExp Simple Parser', () => {
           children: [
             {
               type: 'value',
-              subtype: 'escape',
               codePoint: 'q'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '{'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: 'a'.codePointAt ( 0 )
             },
             {
               type: 'value',
-              subtype: 'symbol',
               codePoint: '}'.codePointAt ( 0 )
             }
           ]
@@ -2702,7 +2555,6 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /\3/, {
         type: 'value',
-        subtype: 'octal-escape',
         codePoint: 3
       });
 
@@ -2716,7 +2568,6 @@ describe ( 'RegExp Simple Parser', () => {
           },
           {
             type: 'value',
-            subtype: 'octal-escape',
             codePoint: 3
           }
         ]
@@ -2737,7 +2588,6 @@ describe ( 'RegExp Simple Parser', () => {
           },
           {
             type: 'value',
-            subtype: 'octal-escape',
             codePoint: 3
           }
         ]
@@ -2756,12 +2606,10 @@ describe ( 'RegExp Simple Parser', () => {
         children: [
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 55357
           },
           {
             type: 'value',
-            subtype: 'symbol',
             codePoint: 56835
           }
         ]
@@ -2769,7 +2617,6 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /😃/u, {
         type: 'value',
-        subtype: 'symbol',
         codePoint: 128515
       });
 
