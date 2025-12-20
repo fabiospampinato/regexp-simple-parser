@@ -1,21 +1,13 @@
 
 /* MAIN */
 
-const memoize = <T, U> ( fn: ( arg: T ) => U ): ( arg: T ) => U => {
+const memoizeByString = <T> ( fn: ( arg: string ) => T ): ( arg: string ) => T => {
 
-  const cache = new Map<T, U> ();
+  const cache: Partial<Record<string, T>> = {};
 
-  return ( arg: T ): U => {
+  return ( arg: string ): T => {
 
-    const cached = cache.get ( arg );
-
-    if ( cached !== undefined ) return cached;
-
-    const result = fn ( arg );
-
-    cache.set ( arg, result );
-
-    return result;
+    return cache[arg] ??= fn ( arg );
 
   };
 
@@ -35,4 +27,4 @@ const toInt = ( value: string, base?: number ): number => {
 
 /* EXPORT */
 
-export {memoize, toCodePoint, toInt};
+export {memoizeByString, toCodePoint, toInt};

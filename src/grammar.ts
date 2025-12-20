@@ -3,7 +3,7 @@
 
 import {match, and, lazy, optional, or, star} from 'grammex';
 import {FALLBACK_NODE, SINGLE_ESCAPE_CHAR_MAP} from './constants';
-import {memoize, toCodePoint, toInt} from './utils';
+import {memoizeByString, toCodePoint, toInt} from './utils';
 
 import type {ExplicitRule} from 'grammex';
 import type {NodePrimitive, NodeQuantifiable, NodeAlternable, Node} from './types';
@@ -24,7 +24,7 @@ import type {NodeValue} from './types';
 
 //URL: https://tc39.es/ecma262/#sec-patterns
 
-const getGrammar = memoize ( ( flags: string ) => {
+const getGrammar = memoizeByString ( ( flags: string ) => {
 
   /* FLAGS */
 
@@ -93,7 +93,7 @@ const getGrammar = memoize ( ( flags: string ) => {
   const ValueUnicodeCodePointEscape = u ? match<NodeValue>( /\\u\{([0-9a-fA-F]+)\}/, ( _, $1 ) => ({ type: 'value', codePoint: toInt ( $1, 16 ) }) ) : Unsupported;
   const ValueEscape = match<NodeValue>( /\\(.)/, ( _, $1 ) => ({ type: 'value', codePoint: toCodePoint ( $1 ) }) );
   const ValueSymbolStrict = match<NodeValue>( u ? /[^^$.*+?(){}|\\\[\]]/u : /[^^$.*+?(){}|\\\[\]]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
-  const ValueSymbolPermissive = match<NodeValue>( u ? /[^()|\\\[]/u : /[^()|\\\[]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) ); //TODO: have a much closer look at this, which feels sketchy //TODO: Try to have fewer ValueSymbol rules
+  const ValueSymbolPermissive = match<NodeValue>( u ? /[^()|\\\[]/u : /[^()|\\\[]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) ); //TODO: Have a much closer look at this, which feels sketchy //TODO: Try to have fewer ValueSymbol rules
   const Value = or<NodeValue>([ ValueControlEscape, ValueHexadecimalEscape, ValueAmbiguousOctalEscape, ValueOctalEscape, ValueNullEscape, ValueSingleEscape, ValueUnicodeEscape, ValueUnicodeCodePointEscape, ValueEscape, ValueSymbolStrict ]);
 
   const Primitive = or<NodePrimitive>([ Anchor, CharacterClassEscape, CharacterClass, Dot, Property, ValueAmbiguousOctalEscape, Reference, Value ]);

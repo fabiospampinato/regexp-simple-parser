@@ -10,7 +10,10 @@ import type {Node} from './types';
 
 const _parse = ( re: RegExp ): Node => {
 
-  return parse ( re.source, getGrammar ( re.flags ) )[0] ?? FALLBACK_NODE;
+  const grammar = getGrammar ( re.flags );
+  const node = parse ( re.source, grammar )[0];
+
+  return node ?? FALLBACK_NODE;
 
 };
 
