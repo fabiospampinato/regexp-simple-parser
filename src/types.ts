@@ -263,15 +263,14 @@ type NodeAlternable = (
 
 type Node = (
   NodePrimitive |
-  NodeQuantifiable |
-  NodeAlternable |
+  NodeGroup |
+  NodeQuantifier |
   NodeAlternative |
   NodeDisjuction
 );
 
 /* EXPORT */
 
-export type {NodePrimitive, NodeQuantifiable, NodeAlternable, Node};
 export type {NodeAlternative};
 export type {NodeAnchor, NodeAnchorStart, NodeAnchorEnd, NodeAnchorBoundary, NodeAnchorNonBoundary};
 export type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterClassSubtraction, NodeCharacterClassUnion, NodeCharacterClassChild};
@@ -285,3 +284,4 @@ export type {NodeProperty};
 export type {NodeQuantifier, NodeQuantifierOptional, NodeQuantifierPlus, NodeQuantifierStar, NodeQuantifierRange};
 export type {NodeReference, NodeReferenceIndex, NodeReferenceName};
 export type {NodeValue};
+export type {NodePrimitive, NodeQuantifiable, NodeAlternable, Node};

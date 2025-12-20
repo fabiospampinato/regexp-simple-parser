@@ -6,7 +6,6 @@ import {FALLBACK_NODE, SINGLE_ESCAPE_CHAR_MAP} from './constants';
 import {memoizeByString, toCodePoint, toInt} from './utils';
 
 import type {ExplicitRule} from 'grammex';
-import type {NodePrimitive, NodeQuantifiable, NodeAlternable, Node} from './types';
 import type {NodeAlternative} from './types';
 import type {NodeAnchor, NodeAnchorStart, NodeAnchorEnd, NodeAnchorBoundary, NodeAnchorNonBoundary} from './types';
 import type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterClassSubtraction, NodeCharacterClassUnion} from './types';
@@ -19,6 +18,7 @@ import type {NodeProperty} from './types';
 import type {NodeQuantifier, NodeQuantifierOptional, NodeQuantifierPlus, NodeQuantifierStar, NodeQuantifierRange} from './types';
 import type {NodeReference, NodeReferenceIndex, NodeReferenceName} from './types';
 import type {NodeValue} from './types';
+import type {NodePrimitive, NodeQuantifiable, NodeAlternable, Node} from './types';
 
 /* MAIN */
 
@@ -45,9 +45,9 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
 
   const CharacterClassEscape = match<NodeCharacterClassEscape>( /\\([dDsSwW])/, ( _, $1 ) => ({ type: 'character-class-escape', value: $1 as NodeCharacterClassEscape['value'] }) ); //TSC
 
-  const CharacterClassSubstringValueSymbol = match<NodeValue>( u ? /[^\\\]\}]/u : /[^\\\]\}]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
-  const CharacterClassSubstringChild = lazy<NodeCharacterClassDisjuctionChild>( () => or<NodeCharacterClassDisjuctionChild>([ CharacterClassEscape, Property, Value, CharacterClassSubstringValueSymbol ]) );
-  const CharacterClassSubstring = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassSubstringChild, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassSubstringChild ]) ) ]) ), '}'], _ => ({ type: 'character-class-disjunction', children: _ }) ) : Unsupported;
+  const CharacterClassDisjuctionValueSymbol = match<NodeValue>( u ? /[^\\\]\}]/u : /[^\\\]\}]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
+  const CharacterClassDisjuctionChild = lazy<NodeCharacterClassDisjuctionChild>( () => or<NodeCharacterClassDisjuctionChild>([ CharacterClassEscape, Property, Value, CharacterClassDisjuctionValueSymbol ]) );
+  const CharacterClassDisjuction = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassDisjuctionChild, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassDisjuctionChild ]) ) ]) ), '}'], _ => ({ type: 'character-class-disjunction', children: _ }) ) : Unsupported;
 
   const CharacterClassValueSymbol = match<NodeValue>( u ? /[^\\\]]/u : /[^\\\]]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
   const CharacterClassRangeChild = lazy<NodeValue> ( () => or<NodeValue>([ Value, CharacterClassValueSymbol ]) );
@@ -55,7 +55,7 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
 
   const CharacterClassNegation = match<boolean> ( /\^?/, _ => !!_ );
 
-  const CharacterClassChild = lazy<NodeCharacterClassChild>( () => or<NodeCharacterClassChild>([ CharacterClassNested, CharacterClassSubstring, CharacterClassEscape, CharacterClassRange, Property, Value, CharacterClassValueSymbol ]) );
+  const CharacterClassChild = lazy<NodeCharacterClassChild>( () => or<NodeCharacterClassChild>([ CharacterClassNested, CharacterClassDisjuction, CharacterClassEscape, CharacterClassRange, Property, Value, CharacterClassValueSymbol ]) );
   const CharacterClassIntersection = v ? and<NodeCharacterClassChild, NodeCharacterClassIntersection>( ['[', CharacterClassNegation, CharacterClassChild, '&&', CharacterClassChild, ']'], ([ $1, $2, $3 ]) => ({ type: 'character-class', subtype: 'intersection', negative: $1, children: [$2, $3] }) ) : Unsupported;
   const CharacterClassSubtraction = v ? and<NodeCharacterClassChild, NodeCharacterClassSubtraction>( ['[', CharacterClassNegation, CharacterClassChild, '--', CharacterClassChild, ']'], ([ $1, $2, $3 ]) => ({ type: 'character-class', subtype: 'subtraction', negative: $1, children: [$2, $3] }) ) : Unsupported;
   const CharacterClassUnion = and<NodeCharacterClassChild, NodeCharacterClassUnion>( ['[', CharacterClassNegation, star<NodeCharacterClassChild>( CharacterClassChild ), ']'], ([ $1, ...$$ ]) => ({ type: 'character-class', subtype: 'union', negative: $1, children: $$ }) );
