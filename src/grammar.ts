@@ -47,7 +47,7 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
 
   const CharacterClassSubstringValueSymbol = match<NodeValue>( u ? /[^\\\]\}]/u : /[^\\\]\}]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
   const CharacterClassSubstringChild = lazy<NodeCharacterClassDisjuctionChild>( () => or<NodeCharacterClassDisjuctionChild>([ CharacterClassEscape, Property, Value, CharacterClassSubstringValueSymbol ]) );
-  const CharacterClassSubstring = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassSubstringChild, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassSubstringChild ]) ) ]) ), '}'], _ => ({ type: 'disjunction', children: _ }) ) : Unsupported;
+  const CharacterClassSubstring = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassSubstringChild, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassSubstringChild ]) ) ]) ), '}'], _ => ({ type: 'character-class-disjunction', children: _ }) ) : Unsupported;
 
   const CharacterClassValueSymbol = match<NodeValue>( u ? /[^\\\]]/u : /[^\\\]]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
   const CharacterClassRangeChild = lazy<NodeValue> ( () => or<NodeValue>([ Value, CharacterClassValueSymbol ]) );

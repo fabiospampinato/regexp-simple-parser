@@ -72,19 +72,6 @@ type NodeCharacterClass = (
   NodeCharacterClassUnion
 );
 
-/* MAIN - CHARACTER CLASS - INTERNALS */
-
-type NodeCharacterClassDisjuction = NodeBase & {
-  type: 'disjunction',
-  children: NodeCharacterClassDisjuctionChild[]
-};
-
-type NodeCharacterClassDisjuctionChild = (
-  NodeCharacterClassEscape |
-  NodeProperty |
-  NodeValue
-);
-
 type NodeCharacterClassChild = (
   NodeCharacterClass |
   NodeCharacterClassDisjuction |
@@ -94,17 +81,32 @@ type NodeCharacterClassChild = (
   NodeValue
 );
 
-type NodeCharacterClassRange = NodeBase & {
-  type: 'character-class-range',
-  fromCodePoint: number,
-  toCodePoint: number
+/* MAIN - CHARACTER CLASS DISJUCTION */
+
+type NodeCharacterClassDisjuction = NodeBase & {
+  type: 'character-class-disjunction',
+  children: NodeCharacterClassDisjuctionChild[]
 };
+
+type NodeCharacterClassDisjuctionChild = (
+  NodeCharacterClassEscape |
+  NodeProperty |
+  NodeValue
+);
 
 /* MAIN - CHARACTER CLASS ESCAPE */
 
 type NodeCharacterClassEscape = NodeBase & {
   type: 'character-class-escape',
   value: 'd' | 'D' | 's' | 'S' | 'w' | 'W'
+};
+
+/* MAIN - CHARACTER CLASS RANGE */
+
+type NodeCharacterClassRange = NodeBase & {
+  type: 'character-class-range',
+  fromCodePoint: number,
+  toCodePoint: number
 };
 
 /* MAIN - DISJUCTION */
@@ -272,9 +274,10 @@ type Node = (
 export type {NodePrimitive, NodeQuantifiable, NodeAlternable, Node};
 export type {NodeAlternative};
 export type {NodeAnchor, NodeAnchorStart, NodeAnchorEnd, NodeAnchorBoundary, NodeAnchorNonBoundary};
-export type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterClassSubtraction, NodeCharacterClassUnion};
-export type {NodeCharacterClassDisjuction, NodeCharacterClassDisjuctionChild, NodeCharacterClassChild};
-export type {NodeCharacterClassEscape, NodeCharacterClassRange};
+export type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterClassSubtraction, NodeCharacterClassUnion, NodeCharacterClassChild};
+export type {NodeCharacterClassDisjuction, NodeCharacterClassDisjuctionChild};
+export type {NodeCharacterClassEscape};
+export type {NodeCharacterClassRange};
 export type {NodeDisjuction};
 export type {NodeDot};
 export type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLookahead, NodeGroupLookbehind, NodeGroupNegativeLookahead, NodeGroupNegativeLookbehind};

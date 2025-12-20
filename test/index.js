@@ -260,7 +260,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: []
           }
         ]
@@ -272,7 +272,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -289,7 +289,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -320,7 +320,7 @@ describe ( 'RegExp Simple Parser', () => {
           negative: false,
           children: [
             {
-              type: 'disjunction',
+              type: 'character-class-disjunction',
               children: [
                 {
                   type: 'value',
@@ -350,7 +350,7 @@ describe ( 'RegExp Simple Parser', () => {
           negative: false,
           children: [
             {
-              type: 'disjunction',
+              type: 'character-class-disjunction',
               children: [
                 {
                   type: 'value',
@@ -373,7 +373,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -400,7 +400,7 @@ describe ( 'RegExp Simple Parser', () => {
           negative: false,
           children: [
             {
-              type: 'disjunction',
+              type: 'character-class-disjunction',
               children: [
                 {
                   type: 'value',
@@ -423,7 +423,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -444,7 +444,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -471,7 +471,7 @@ describe ( 'RegExp Simple Parser', () => {
           negative: false,
           children: [
             {
-              type: 'disjunction',
+              type: 'character-class-disjunction',
               children: [
                 {
                   type: 'value',
@@ -494,7 +494,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -515,7 +515,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
@@ -532,7 +532,7 @@ describe ( 'RegExp Simple Parser', () => {
         negative: false,
         children: [
           {
-            type: 'disjunction',
+            type: 'character-class-disjunction',
             children: [
               {
                 type: 'value',
