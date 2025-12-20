@@ -39,17 +39,14 @@ const AST: Node = parse ( /^(a|b|c)$/ );
 //           children: [
 //             {
 //               type: 'value',
-//               subtype: 'symbol',
 //               codePoint: 97
 //             },
 //             {
 //               type: 'value',
-//               subtype: 'symbol',
 //               codePoint: 98
 //             },
 //             {
 //               type: 'value',
-//               subtype: 'symbol',
 //               codePoint: 99
 //             }
 //           ]
