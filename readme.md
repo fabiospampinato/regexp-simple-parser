@@ -2,7 +2,7 @@
 
 A simple and modern RegExp parser.
 
-No validations are performed, a valid RegExp object mut be provided, so validation is delegated to the engine.
+No validations are performed, a valid RegExp object must be provided, so validation is delegated to the engine.
 
 The AST produced is not a "concrete" AST, but you could reconstruct a RegExp equivalent to the original from it, plus the flags.
 
