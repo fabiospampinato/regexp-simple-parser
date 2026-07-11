@@ -1395,7 +1395,7 @@ describe ( 'RegExp Simple Parser', () => {
         subtype: 'non-capturing',
         flags: {
           enabled: 'ims',
-          disabled: undefined
+          disabled: ''
         },
         children: []
       });
@@ -1405,7 +1405,7 @@ describe ( 'RegExp Simple Parser', () => {
         subtype: 'non-capturing',
         flags: {
           enabled: 'ims',
-          disabled: undefined
+          disabled: ''
         },
         children: [
           {
@@ -1420,7 +1420,7 @@ describe ( 'RegExp Simple Parser', () => {
         subtype: 'non-capturing',
         flags: {
           enabled: 'ims',
-          disabled: undefined
+          disabled: ''
         },
         children: [
           {
@@ -1444,7 +1444,7 @@ describe ( 'RegExp Simple Parser', () => {
         subtype: 'non-capturing',
         flags: {
           enabled: 'ims',
-          disabled: undefined
+          disabled: ''
         },
         children: [
           {
@@ -1452,7 +1452,7 @@ describe ( 'RegExp Simple Parser', () => {
             subtype: 'non-capturing',
             flags: {
               enabled: 'ims',
-              disabled: undefined
+              disabled: ''
             },
             children: []
           }
@@ -1465,7 +1465,7 @@ describe ( 'RegExp Simple Parser', () => {
         type: 'group',
         subtype: 'non-capturing',
         flags: {
-          enabled: undefined,
+          enabled: '',
           disabled: 'ims'
         },
         children: []
@@ -1475,7 +1475,7 @@ describe ( 'RegExp Simple Parser', () => {
         type: 'group',
         subtype: 'non-capturing',
         flags: {
-          enabled: undefined,
+          enabled: '',
           disabled: 'ims'
         },
         children: [
@@ -1490,7 +1490,7 @@ describe ( 'RegExp Simple Parser', () => {
         type: 'group',
         subtype: 'non-capturing',
         flags: {
-          enabled: undefined,
+          enabled: '',
           disabled: 'ims'
         },
         children: [
@@ -1514,7 +1514,7 @@ describe ( 'RegExp Simple Parser', () => {
         type: 'group',
         subtype: 'non-capturing',
         flags: {
-          enabled: undefined,
+          enabled: '',
           disabled: 'ims'
         },
         children: [
@@ -1522,7 +1522,7 @@ describe ( 'RegExp Simple Parser', () => {
             type: 'group',
             subtype: 'non-capturing',
             flags: {
-              enabled: undefined,
+              enabled: '',
               disabled: 'ims'
             },
             children: []

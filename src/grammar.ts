@@ -100,7 +100,7 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
 
   /* GROUP */
 
-  const GroupFlags = match<NonNullable<NodeGroupNonCapturing['flags']>>( /([a-z]+)(?:-([a-z]+))?|-([a-z]+)/, ( _, $1, $2, $3 ) => ({ enabled: $1, disabled: $2 ?? $3 }) );
+  const GroupFlags = match<NonNullable<NodeGroupNonCapturing['flags']>>( /([a-z]+)(?:-([a-z]+))?|-([a-z]+)/, ( _, $1, $2, $3 ) => ({ enabled: $1 ?? '', disabled: $2 ?? $3 ?? '' }) );
   const GroupName = match<NonNullable<NodeGroupCapturing['name']>>( /[$_\p{ID_Start}][$\p{ID_Continue}]*/u, _ => _ );
 
   const Groupable = lazy<Node>( () => Disjuction );
