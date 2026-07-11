@@ -381,7 +381,7 @@ describe ( 'RegExp Simple Parser', () => {
             ]
           }
         ]
-    });
+      });
 
     });
 
@@ -409,25 +409,25 @@ describe ( 'RegExp Simple Parser', () => {
       });
 
       assert ( /[\q{|a}]/v, {
-          type: 'character-class',
-          subtype: 'union',
-          negative: false,
-          children: [
-            {
-              type: 'character-class-disjunction',
-              children: [
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
               {
                 type: 'character-class-string',
                 children: []
               },
-                {
-                  type: 'value',
+              {
+                type: 'value',
                 codePoint: 'a'.codePointAt ( 0 )
-                }
-              ]
-            }
-          ]
-        });
+              }
+            ]
+          }
+        ]
+      });
 
       assert ( /[\q{|||a|||}]/v, {
         type: 'character-class',
@@ -464,7 +464,7 @@ describe ( 'RegExp Simple Parser', () => {
               {
                 type: 'character-class-string',
                 children: []
-      }
+              }
             ]
           }
         ]
@@ -3420,6 +3420,132 @@ describe ( 'RegExp Simple Parser', () => {
 
     });
 
+    it ( 'supports a multi-digit backreference when it makes sense', () => {
+
+      assert ( /()()()()()()()()()()\10/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'reference',
+            subtype: 'index',
+            value: 10
+          }
+        ]
+      });
+
+    });
+
+    it.skip ( 'supports forward reference when it makes sense', () => {
+
+      assert ( /\3()()()/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'reference',
+            subtype: 'index',
+            value: 3
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          }
+        ]
+      });
+
+      assert ( /\3()()()()/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'reference',
+            subtype: 'index',
+            value: 3
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          }
+        ]
+      });
+
+    });
+
     it ( 'supports an octal when it makes sense', () => {
 
       assert ( /\3/, {
@@ -3458,6 +3584,30 @@ describe ( 'RegExp Simple Parser', () => {
           {
             type: 'value',
             codePoint: 3
+          }
+        ]
+      });
+
+    });
+
+    it ( 'supports a multi-digit octal when it makes sense', () => {
+
+      assert ( /\10/, {
+        type: 'value',
+        codePoint: parseInt ( '10', 8 )
+      });
+
+      assert ( /\10()/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'value',
+            codePoint: parseInt ( '10', 8 )
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
           }
         ]
       });
