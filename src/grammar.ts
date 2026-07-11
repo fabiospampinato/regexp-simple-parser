@@ -10,6 +10,7 @@ import type {NodeAlternative} from './types';
 import type {NodeAnchor, NodeAnchorStart, NodeAnchorEnd, NodeAnchorBoundary, NodeAnchorNonBoundary} from './types';
 import type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterClassSubtraction, NodeCharacterClassUnion} from './types';
 import type {NodeCharacterClassDisjuction, NodeCharacterClassDisjuctionChild, NodeCharacterClassChild} from './types';
+import type {NodeCharacterClassString, NodeCharacterClassStringChild} from './types';
 import type {NodeCharacterClassEscape, NodeCharacterClassRange} from './types';
 import type {NodeDisjuction} from './types';
 import type {NodeDot} from './types';
@@ -45,9 +46,10 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
 
   const CharacterClassEscape = match<NodeCharacterClassEscape>( /\\([dDsSwW])/, ( _, $1 ) => ({ type: 'character-class-escape', value: $1 as NodeCharacterClassEscape['value'] }) ); //TSC
 
-  const CharacterClassDisjuctionValueSymbol = match<NodeValue>( u ? /[^\\\]\}]/u : /[^\\\]\}]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
-  const CharacterClassDisjuctionChild = lazy<NodeCharacterClassDisjuctionChild>( () => or<NodeCharacterClassDisjuctionChild>([ CharacterClassEscape, Property, Value, CharacterClassDisjuctionValueSymbol ]) );
-  const CharacterClassDisjuction = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassDisjuctionChild, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassDisjuctionChild ]) ) ]) ), '}'], _ => ({ type: 'character-class-disjunction', children: _ }) ) : Unsupported;
+  const CharacterClassStringValueSymbol = match<NodeValue>( u ? /[^\|\\\]\}]/u : /[^\|\\\]\}]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
+  const CharacterClassStringChild = lazy<NodeCharacterClassStringChild>( () => or<NodeCharacterClassStringChild>([ CharacterClassEscape, Property, Value, CharacterClassStringValueSymbol ]) );
+  const CharacterClassString = star ( CharacterClassStringChild, _ => ( _.length <= 1 ) ? ( _[0] ?? { type: 'character-class-string', children: [] } ) : ({ type: 'character-class-string', children: _ }) );
+  const CharacterClassDisjuction = v ? and<NodeCharacterClassDisjuctionChild, NodeCharacterClassDisjuction>( ['\\q{', optional<NodeCharacterClassDisjuctionChild>( and ([ CharacterClassString, star<NodeCharacterClassDisjuctionChild>( and ([ '|', CharacterClassString ]) ) ]) ), '}'], _ => ({ type: 'character-class-disjunction', children: ( _.length === 1 && _[0].type === 'character-class-string' && !_[0].children.length  ? [] : _ ) }) ) : Unsupported;
 
   const CharacterClassValueSymbol = match<NodeValue>( u ? /[^\\\]]/u : /[^\\\]]/, _ => ({ type: 'value', codePoint: toCodePoint ( _ ) }) );
   const CharacterClassRangeChild = lazy<NodeValue> ( () => or<NodeValue>([ Value, CharacterClassValueSymbol ]) );

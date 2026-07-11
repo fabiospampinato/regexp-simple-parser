@@ -319,6 +319,10 @@ describe ( 'RegExp Simple Parser', () => {
         ]
       });
 
+    });
+
+    it ( 'supports substring disjunction', () => {
+
       assert ( /[\q{a|b}]/v, {
         type: 'character-class',
         subtype: 'union',
@@ -340,17 +344,71 @@ describe ( 'RegExp Simple Parser', () => {
         ]
       });
 
+      assert ( /[\q{ab|cd}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: 'a'.codePointAt ( 0 )
+                  },
+                  {
+                    type: 'value',
+                    codePoint: 'b'.codePointAt ( 0 )
+                  }
+                ]
+              },
+              {
+                type: 'character-class-string',
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: 'c'.codePointAt ( 0 )
+                  },
+                  {
+                    type: 'value',
+                    codePoint: 'd'.codePointAt ( 0 )
+                  }
+                ]
+              }
+            ]
+          }
+        ]
     });
 
-    it ( 'supports substring, with unescaped value', () => {
+    });
 
-      const CHARS = [...'^$.*+?|'];
+    it ( 'supports partial disjuctions', () => {
 
-      for ( const char of CHARS ) {
+      assert ( /[\q{a|}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'value',
+                codePoint: 'a'.codePointAt ( 0 )
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              }
+            ]
+          }
+        ]
+      });
 
-        const re = new RegExp ( `[\\q{${char}}]`, 'v' );
-
-        assert ( re, {
+      assert ( /[\q{|a}]/v, {
           type: 'character-class',
           subtype: 'union',
           negative: false,
@@ -358,16 +416,59 @@ describe ( 'RegExp Simple Parser', () => {
             {
               type: 'character-class-disjunction',
               children: [
+              {
+                type: 'character-class-string',
+                children: []
+              },
                 {
                   type: 'value',
-                  codePoint: char.codePointAt ( 0 )
+                codePoint: 'a'.codePointAt ( 0 )
                 }
               ]
             }
           ]
         });
 
+      assert ( /[\q{|||a|||}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'value',
+                codePoint: 'a'.codePointAt ( 0 )
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
       }
+            ]
+          }
+        ]
+      });
 
     });
 
@@ -424,7 +525,7 @@ describe ( 'RegExp Simple Parser', () => {
 
     it ( 'supports substring, with unescaped value', () => {
 
-      const CHARS = [...'^$.*+?|'];
+      const CHARS = [...'^$.*+?'];
 
       for ( const char of CHARS ) {
 
@@ -579,7 +680,11 @@ describe ( 'RegExp Simple Parser', () => {
         ]
       });
 
-      assert ( /[\q{a|b|\u{1F600}}]/v, {
+    });
+
+    it ( 'supports substring disjunction, with unicode escape value', () => {
+
+      assert ( /[\q{\u3042|\u{1F600}}]/v, {
         type: 'character-class',
         subtype: 'union',
         negative: false,
@@ -589,15 +694,220 @@ describe ( 'RegExp Simple Parser', () => {
             children: [
               {
                 type: 'value',
-                codePoint: 'a'.codePointAt ( 0 )
-              },
-              {
-                type: 'value',
-                codePoint: 'b'.codePointAt ( 0 )
+                codePoint: '\u3042'.codePointAt ( 0 )
               },
               {
                 type: 'value',
                 codePoint: '\u{1F600}'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{\u3042\u{1F600}|\u3043\u{1F601}}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: '\u3042'.codePointAt ( 0 )
+                  },
+                  {
+                    type: 'value',
+                    codePoint: '\u{1F600}'.codePointAt ( 0 )
+                  }
+                ]
+              },
+              {
+                type: 'character-class-string',
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: '\u3043'.codePointAt ( 0 )
+                  },
+                  {
+                    type: 'value',
+                    codePoint: '\u{1F601}'.codePointAt ( 0 )
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+
+    });
+
+    it ( 'supports substring partial disjunction, with unicode escape value', () => {
+
+      assert ( /[\q{\u3042|}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'value',
+                codePoint: '\u3042'.codePointAt ( 0 )
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{|\u3042}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'value',
+                codePoint: '\u3042'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{|||\u3042|||}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'value',
+                codePoint: '\u3042'.codePointAt ( 0 )
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{\u{1F600}|}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'value',
+                codePoint: '\u{1F600}'.codePointAt ( 0 )
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{|\u{1F600}}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'value',
+                codePoint: '\u{1F600}'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{|||\u{1F600}|||}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'value',
+                codePoint: '\u{1F600}'.codePointAt ( 0 )
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
+              },
+              {
+                type: 'character-class-string',
+                children: []
               }
             ]
           }

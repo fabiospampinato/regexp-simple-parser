@@ -89,6 +89,7 @@ type NodeCharacterClassDisjuction = NodeBase & {
 };
 
 type NodeCharacterClassDisjuctionChild = (
+  NodeCharacterClassString |
   NodeCharacterClassEscape |
   NodeProperty |
   NodeValue
@@ -108,6 +109,19 @@ type NodeCharacterClassRange = NodeBase & {
   fromCodePoint: number,
   toCodePoint: number
 };
+
+/* MAIN - CHARACTER CLASS STRING */
+
+type NodeCharacterClassString = NodeBase & {
+  type: 'character-class-string',
+  children: NodeCharacterClassStringChild[]
+};
+
+type NodeCharacterClassStringChild = (
+  NodeCharacterClassEscape |
+  NodeProperty |
+  NodeValue
+);
 
 /* MAIN - DISJUCTION */
 
@@ -277,6 +291,7 @@ export type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterCl
 export type {NodeCharacterClassDisjuction, NodeCharacterClassDisjuctionChild};
 export type {NodeCharacterClassEscape};
 export type {NodeCharacterClassRange};
+export type {NodeCharacterClassString, NodeCharacterClassStringChild};
 export type {NodeDisjuction};
 export type {NodeDot};
 export type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLookahead, NodeGroupLookbehind, NodeGroupNegativeLookahead, NodeGroupNegativeLookbehind};
