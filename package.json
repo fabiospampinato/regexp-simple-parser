@@ -25,7 +25,7 @@
     "parser"
   ],
   "dependencies": {
-    "grammex": "^3.1.12"
+    "grammex": "^3.1.13"
   },
   "devDependencies": {
     "benchloop": "^2.1.1",

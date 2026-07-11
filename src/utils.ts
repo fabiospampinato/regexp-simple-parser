@@ -1,5 +1,27 @@
 
+/* IMPORT */
+
+import type {Node} from './types';
+
 /* MAIN */
+
+const countNodes = ( node: Node, type: string, subtype?: string | undefined ): number => {
+
+  let count = 0;
+
+  traverseNode ( node, node => {
+
+    if ( node.type === type && node.subtype === subtype ) {
+
+      count += 1;
+
+    }
+
+  });
+
+  return count;
+
+};
 
 const memoizeByString = <T> ( fn: ( arg: string ) => T ): ( arg: string ) => T => {
 
@@ -25,6 +47,18 @@ const toInt = ( value: string, base?: number ): number => {
 
 };
 
+const traverseNode = ( node: Node, fn: ( node: Node ) => void ): void => {
+
+  fn ( node );
+
+  if ( 'children' in node ) {
+
+    node.children.forEach ( child => traverseNode ( child, fn ) );
+
+  }
+
+};
+
 /* EXPORT */
 
-export {memoizeByString, toCodePoint, toInt};
+export {countNodes, memoizeByString, toCodePoint, toInt, traverseNode};

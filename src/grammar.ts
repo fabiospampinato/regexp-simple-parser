@@ -10,7 +10,7 @@ import type {NodeAlternative} from './types';
 import type {NodeAnchor, NodeAnchorStart, NodeAnchorEnd, NodeAnchorBoundary, NodeAnchorNonBoundary} from './types';
 import type {NodeCharacterClass, NodeCharacterClassIntersection, NodeCharacterClassSubtraction, NodeCharacterClassUnion} from './types';
 import type {NodeCharacterClassDisjuction, NodeCharacterClassDisjuctionChild, NodeCharacterClassChild} from './types';
-import type {NodeCharacterClassString, NodeCharacterClassStringChild} from './types';
+import type {NodeCharacterClassStringChild} from './types';
 import type {NodeCharacterClassEscape, NodeCharacterClassRange} from './types';
 import type {NodeDisjuction} from './types';
 import type {NodeDot} from './types';
@@ -77,7 +77,7 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
     re.lastIndex = state.index;
     const match = re.exec ( state.input );
     if ( !match ) return false;
-    const referenceIndexMax = state.output.filter ( node => node.type === 'group' && node.subtype === 'capturing' ).length;
+    const referenceIndexMax = Number ( state.options['capturingGroupsCount'] ) || 0;
     const referenceIndex = toInt ( match[1] );
     if ( referenceIndex <= referenceIndexMax ) return false;
     const codePoint = toInt ( match[1], 8 );

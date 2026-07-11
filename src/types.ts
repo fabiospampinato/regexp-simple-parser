@@ -257,7 +257,10 @@ type NodeValue = NodeBase & {
 
 type NodePrimitive = (
   NodeAnchor |
+  NodeCharacterClassDisjuction |
   NodeCharacterClassEscape |
+  NodeCharacterClassRange |
+  NodeCharacterClassString |
   NodeCharacterClass |
   NodeDot |
   NodeProperty |

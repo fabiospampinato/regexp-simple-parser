@@ -3485,7 +3485,7 @@ describe ( 'RegExp Simple Parser', () => {
 
     });
 
-    it.skip ( 'supports forward reference when it makes sense', () => {
+    it ( 'supports forward reference when it makes sense', () => {
 
       assert ( /\3()()()/, {
         type: 'alternative',
@@ -3540,6 +3540,61 @@ describe ( 'RegExp Simple Parser', () => {
             type: 'group',
             subtype: 'capturing',
             children: []
+          }
+        ]
+      });
+
+      assert ( /()()()|\3/, {
+        type: 'disjunction',
+        children: [
+          {
+            type: 'alternative',
+            children: [
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: []
+              },
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: []
+              },
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: []
+              }
+            ]
+          },
+          {
+            type: 'reference',
+            subtype: 'index',
+            value: 3
+          }
+        ]
+      });
+
+      assert ( /(((\3)))/, {
+        type: 'group',
+        subtype: 'capturing',
+        children: [
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: [
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: [
+                  {
+                    type: 'reference',
+                    subtype: 'index',
+                    value: 3
+                  }
+                ]
+              }
+            ]
           }
         ]
       });
@@ -3608,6 +3663,88 @@ describe ( 'RegExp Simple Parser', () => {
             type: 'group',
             subtype: 'capturing',
             children: []
+          }
+        ]
+      });
+
+    });
+
+    it ( 'supports forward octals when it makes sense', () => {
+
+      assert ( /\4()()()/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'value',
+            codePoint: 4
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          }
+        ]
+      });
+
+      assert ( /()()()|\4/, {
+        type: 'disjunction',
+        children: [
+          {
+            type: 'alternative',
+            children: [
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: []
+              },
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: []
+              },
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: []
+              }
+            ]
+          },
+          {
+            type: 'value',
+            codePoint: 4
+          }
+        ]
+      });
+
+      assert ( /(((\4)))/, {
+        type: 'group',
+        subtype: 'capturing',
+        children: [
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: [
+              {
+                type: 'group',
+                subtype: 'capturing',
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: 4
+                  }
+                ]
+              }
+            ]
           }
         ]
       });
