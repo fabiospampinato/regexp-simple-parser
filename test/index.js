@@ -250,6 +250,42 @@ describe ( 'RegExp Simple Parser', () => {
 
     });
 
+    it ( 'supports unclosed range', () => {
+
+      assert ( /[-a]/, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'value',
+            codePoint: '-'.codePointAt ( 0 )
+          },
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
+      assert ( /[a-]/, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          },
+          {
+            type: 'value',
+            codePoint: '-'.codePointAt ( 0 )
+          }
+        ]
+      });
+
+    });
+
     /* SUBSTRING */
 
     it ( 'supports substring', () => {
@@ -534,6 +570,31 @@ describe ( 'RegExp Simple Parser', () => {
           {
             type: 'character-class-disjunction',
             children: [
+              {
+                type: 'value',
+                codePoint: '\u{1F600}'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[\q{a|b|\u{1F600}}]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class-disjunction',
+            children: [
+              {
+                type: 'value',
+                codePoint: 'a'.codePointAt ( 0 )
+              },
+              {
+                type: 'value',
+                codePoint: 'b'.codePointAt ( 0 )
+              },
               {
                 type: 'value',
                 codePoint: '\u{1F600}'.codePointAt ( 0 )
@@ -829,7 +890,7 @@ describe ( 'RegExp Simple Parser', () => {
 
   });
 
-  describe ( 'character class, intersection', it => { //TODO: Maybe test more cases here
+  describe ( 'character class, intersection', it => {
 
     it ( 'basic', () => {
 
@@ -857,6 +918,106 @@ describe ( 'RegExp Simple Parser', () => {
               {
                 type: 'value',
                 codePoint: 'b'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[[a-z]&&[d-f]]/v, {
+        type: 'character-class',
+        subtype: 'intersection',
+        negative: false,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-range',
+                fromCodePoint: 'a'.codePointAt ( 0 ),
+                toCodePoint: 'z'.codePointAt ( 0 )
+              }
+            ]
+          },
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-range',
+                fromCodePoint: 'd'.codePointAt ( 0 ),
+                toCodePoint: 'f'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[[\p{ASCII}]&&[\w]]/v, {
+        type: 'character-class',
+        subtype: 'intersection',
+        negative: false,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'property',
+                negative: false,
+                name: 'ASCII'
+              }
+            ]
+          },
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-escape',
+                value: 'w'
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[^[[a]&&[b]]]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: true,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'intersection',
+            negative: false,
+            children: [
+              {
+                type: 'character-class',
+                subtype: 'union',
+                negative: false,
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: 'a'.codePointAt ( 0 )
+                  }
+                ]
+              },
+              {
+                type: 'character-class',
+                subtype: 'union',
+                negative: false,
+                children: [
+                  {
+                    type: 'value',
+                    codePoint: 'b'.codePointAt ( 0 )
+                  }
+                ]
               }
             ]
           }
@@ -937,7 +1098,7 @@ describe ( 'RegExp Simple Parser', () => {
 
   });
 
-  describe ( 'character class, subtraction', it => { //TODO: Maybe test more cases here
+  describe ( 'character class, subtraction', it => {
 
     it ( 'basic', () => {
 
@@ -965,6 +1126,115 @@ describe ( 'RegExp Simple Parser', () => {
               {
                 type: 'value',
                 codePoint: 'b'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[[a-z]--[aeiou]]/v, {
+        type: 'character-class',
+        subtype: 'subtraction',
+        negative: false,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-range',
+                fromCodePoint: 'a'.codePointAt ( 0 ),
+                toCodePoint: 'z'.codePointAt ( 0 )
+              }
+            ]
+          },
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: ['a', 'e', 'i', 'o', 'u'].map ( codePoint => ({
+              type: 'value',
+              codePoint: codePoint.codePointAt ( 0 )
+            }))
+          }
+        ]
+      });
+
+      assert ( /[[\p{ASCII}]--[A-Z]]/v, {
+        type: 'character-class',
+        subtype: 'subtraction',
+        negative: false,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'property',
+                negative: false,
+                name: 'ASCII'
+              }
+            ]
+          },
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-range',
+                fromCodePoint: 'A'.codePointAt ( 0 ),
+                toCodePoint: 'Z'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /[[[a-z]--[aeiou]]&&[a-z]]/v, {
+        type: 'character-class',
+        subtype: 'intersection',
+        negative: false,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'subtraction',
+            negative: false,
+            children: [
+              {
+                type: 'character-class',
+                subtype: 'union',
+                negative: false,
+                children: [
+                  {
+                    type: 'character-class-range',
+                    fromCodePoint: 'a'.codePointAt ( 0 ),
+                    toCodePoint: 'z'.codePointAt ( 0 )
+                  }
+                ]
+              },
+              {
+                type: 'character-class',
+                subtype: 'union',
+                negative: false,
+                children: ['a', 'e', 'i', 'o', 'u'].map ( codePoint => ({
+                  type: 'value',
+                  codePoint: codePoint.codePointAt ( 0 )
+                }))
+              }
+            ]
+          },
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-range',
+                fromCodePoint: 'a'.codePointAt ( 0 ),
+                toCodePoint: 'z'.codePointAt ( 0 )
               }
             ]
           }
@@ -1402,6 +1672,30 @@ describe ( 'RegExp Simple Parser', () => {
         ]
       });
 
+      assert ( /(?<$foo>a)/, {
+        type: 'group',
+        subtype: 'capturing',
+        name: '$foo',
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
+      assert ( /(?<π>a)/, {
+        type: 'group',
+        subtype: 'capturing',
+        name: 'π',
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
     });
 
     it ( 'supports non-capturing group', () => {
@@ -1725,6 +2019,41 @@ describe ( 'RegExp Simple Parser', () => {
         ]
       });
 
+      assert ( /(?=(?:a|b)+)/, {
+        type: 'group',
+        subtype: 'lookahead',
+        children: [
+          {
+            type: 'quantifier',
+            subtype: 'plus',
+            greedy: true,
+            min: 1,
+            max: Infinity,
+            children: [
+              {
+                type: 'group',
+                subtype: 'non-capturing',
+                children: [
+                  {
+                    type: 'disjunction',
+                    children: [
+                      {
+                        type: 'value',
+                        codePoint: 'a'.codePointAt ( 0 )
+                      },
+                      {
+                        type: 'value',
+                        codePoint: 'b'.codePointAt ( 0 )
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+
     });
 
     it ( 'supports lookbehind group', () => {
@@ -1772,6 +2101,41 @@ describe ( 'RegExp Simple Parser', () => {
               {
                 type: 'value',
                 codePoint: 'b'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
+      });
+
+      assert ( /(?<=(?:a|b)+)/, {
+        type: 'group',
+        subtype: 'lookbehind',
+        children: [
+          {
+            type: 'quantifier',
+            subtype: 'plus',
+            greedy: true,
+            min: 1,
+            max: Infinity,
+            children: [
+              {
+                type: 'group',
+                subtype: 'non-capturing',
+                children: [
+                  {
+                    type: 'disjunction',
+                    children: [
+                      {
+                        type: 'value',
+                        codePoint: 'a'.codePointAt ( 0 )
+                      },
+                      {
+                        type: 'value',
+                        codePoint: 'b'.codePointAt ( 0 )
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -2016,6 +2380,20 @@ describe ( 'RegExp Simple Parser', () => {
 
       /* EXACT */
 
+      assert ( /a{0}/, {
+        type: 'quantifier',
+        subtype: 'range',
+        greedy: true,
+        min: 0,
+        max: 0,
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
       assert ( /a{3}/, {
         type: 'quantifier',
         subtype: 'range',
@@ -2076,6 +2454,48 @@ describe ( 'RegExp Simple Parser', () => {
 
       /* MIN & MAX */
 
+      assert ( /a{0,0}/, {
+        type: 'quantifier',
+        subtype: 'range',
+        greedy: true,
+        min: 0,
+        max: 0,
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
+      assert ( /a{1,1}/, {
+        type: 'quantifier',
+        subtype: 'range',
+        greedy: true,
+        min: 1,
+        max: 1,
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
+      assert ( /a{1,1}?/, {
+        type: 'quantifier',
+        subtype: 'range',
+        greedy: false,
+        min: 1,
+        max: 1,
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
+      });
+
       assert ( /a{2,5}/, {
         type: 'quantifier',
         subtype: 'range',
@@ -2128,6 +2548,31 @@ describe ( 'RegExp Simple Parser', () => {
         ]
       });
 
+      assert ( /()\1*?/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'group',
+            subtype: 'capturing',
+            children: []
+          },
+          {
+            type: 'quantifier',
+            subtype: 'star',
+            greedy: false,
+            min: 0,
+            max: Infinity,
+            children: [
+              {
+                type: 'reference',
+                subtype: 'index',
+                value: 1
+              }
+            ]
+          }
+        ]
+      });
+
     });
 
     it ( 'supports name reference', () => {
@@ -2136,6 +2581,49 @@ describe ( 'RegExp Simple Parser', () => {
         type: 'reference',
         subtype: 'name',
         value: 'Foo'
+      });
+
+      assert ( /\k<Foo>*?/, {
+        type: 'quantifier',
+        subtype: 'star',
+        greedy: false,
+        min: 0,
+        max: Infinity,
+        children: [
+          {
+            type: 'reference',
+            subtype: 'name',
+            value: 'Foo'
+          }
+        ]
+      });
+
+      assert ( /(?=\k<Foo>)(?<Foo>a)/, {
+        type: 'alternative',
+        children: [
+          {
+            type: 'group',
+            subtype: 'lookahead',
+            children: [
+              {
+                type: 'reference',
+                subtype: 'name',
+                value: 'Foo'
+              }
+            ]
+          },
+          {
+            type: 'group',
+            subtype: 'capturing',
+            name: 'Foo',
+            children: [
+              {
+                type: 'value',
+                codePoint: 'a'.codePointAt ( 0 )
+              }
+            ]
+          }
+        ]
       });
 
     });
@@ -2704,6 +3192,26 @@ describe ( 'RegExp Simple Parser', () => {
             type: 'character-class-range',
             fromCodePoint: 128515,
             toCodePoint: 128517
+          }
+        ]
+      });
+
+      assert ( /[[😃-😅]]/v, {
+        type: 'character-class',
+        subtype: 'union',
+        negative: false,
+        children: [
+          {
+            type: 'character-class',
+            subtype: 'union',
+            negative: false,
+            children: [
+              {
+                type: 'character-class-range',
+                fromCodePoint: 128515,
+                toCodePoint: 128517
+              }
+            ]
           }
         ]
       });
