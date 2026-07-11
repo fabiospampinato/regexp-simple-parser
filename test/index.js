@@ -1119,33 +1119,104 @@ describe ( 'RegExp Simple Parser', () => {
 
     });
 
-    it ( 'suports partial disjuctions', () => {
+    it ( 'supports partial disjuctions', () => {
 
       assert ( /a|/, {
-        type: 'value',
-        codePoint: 'a'.codePointAt ( 0 )
+        type: 'disjunction',
+        children: [
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          },
+          {
+            type: 'alternative',
+            children: []
+          }
+        ]
       });
 
       assert ( /|a/, {
-        type: 'value',
-        codePoint: 'a'.codePointAt ( 0 )
+        type: 'disjunction',
+        children: [
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          }
+        ]
       });
 
       assert ( /|||a|||/, {
-        type: 'value',
-        codePoint: 'a'.codePointAt ( 0 )
+        type: 'disjunction',
+        children: [
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'value',
+            codePoint: 'a'.codePointAt ( 0 )
+          },
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          }
+        ]
       });
 
-      assert ( /|/, { // A bit weird, but semantically the same
-        type: 'group',
-        subtype: 'non-capturing',
-        children: []
+      assert ( /|/, {
+        type: 'disjunction',
+        children: [
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          }
+        ]
       });
 
-      assert ( /|||/, { // A bit weird, but semantically the same
-        type: 'group',
-        subtype: 'non-capturing',
-        children: []
+      assert ( /|||/, {
+        type: 'disjunction',
+        children: [
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          },
+          {
+            type: 'alternative',
+            children: []
+          }
+        ]
       });
 
     });

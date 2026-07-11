@@ -129,8 +129,8 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
   /* DISJUCTION */
 
   const Alternable = or<NodeAlternable>([ Quantifier, Quantifiable ]);
-  const Alternative = star<NodeAlternable, NodeAlternative | Node>( Alternable, _ => ( _.length <= 1 ) ? _[0] : ({ type: 'alternative', children: _ }) );
-  const Disjuction = and<NodeAlternative, NodeDisjuction | Node>( [Alternative, star ( and ([ '|', Alternative ]) )], _ => ( _.length <= 1 ) ? _[0] : ({ type: 'disjunction', children: _ }) );
+  const Alternative = star<NodeAlternable, NodeAlternative | Node>( Alternable, _ => ( _.length <= 1 ) ? ( _[0] ?? { type: 'alternative', children: [] } ) : ({ type: 'alternative', children: _ }) );
+  const Disjuction = and<NodeAlternative, NodeDisjuction | Node>( [Alternative, star ( and ([ '|', Alternative ]) )], _ => ( _.length <= 1 ) ? ( ( _[0]?.type === 'alternative' && !_[0].children.length ) ? undefined : _[0] ) : ({ type: 'disjunction', children: _ }) );
 
   return Disjuction;
 
