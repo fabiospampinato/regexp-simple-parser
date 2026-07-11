@@ -2283,16 +2283,19 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?=)/, {
         type: 'group',
         subtype: 'lookahead',
+        negative: false,
         children: []
       });
 
       assert ( /(?=(?=))/, {
         type: 'group',
         subtype: 'lookahead',
+        negative: false,
         children: [
           {
             type: 'group',
             subtype: 'lookahead',
+            negative: false,
             children: []
           }
         ]
@@ -2301,6 +2304,7 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?=a)/, {
         type: 'group',
         subtype: 'lookahead',
+        negative: false,
         children: [
           {
             type: 'value',
@@ -2312,6 +2316,7 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?=a|b)/, {
         type: 'group',
         subtype: 'lookahead',
+        negative: false,
         children: [
           {
             type: 'disjunction',
@@ -2332,6 +2337,7 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?=(?:a|b)+)/, {
         type: 'group',
         subtype: 'lookahead',
+        negative: false,
         children: [
           {
             type: 'quantifier',
@@ -2371,16 +2377,19 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?<=)/, {
         type: 'group',
         subtype: 'lookbehind',
+        negative: false,
         children: []
       });
 
       assert ( /(?<=(?<=))/, {
         type: 'group',
         subtype: 'lookbehind',
+        negative: false,
         children: [
           {
             type: 'group',
             subtype: 'lookbehind',
+            negative: false,
             children: []
           }
         ]
@@ -2389,6 +2398,7 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?<=a)/, {
         type: 'group',
         subtype: 'lookbehind',
+        negative: false,
         children: [
           {
             type: 'value',
@@ -2400,6 +2410,7 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?<=a|b)/, {
         type: 'group',
         subtype: 'lookbehind',
+        negative: false,
         children: [
           {
             type: 'disjunction',
@@ -2420,6 +2431,7 @@ describe ( 'RegExp Simple Parser', () => {
       assert ( /(?<=(?:a|b)+)/, {
         type: 'group',
         subtype: 'lookbehind',
+        negative: false,
         children: [
           {
             type: 'quantifier',
@@ -2458,17 +2470,20 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /(?!)/, {
         type: 'group',
-        subtype: 'negative-lookahead',
+        subtype: 'lookahead',
+        negative: true,
         children: []
       });
 
       assert ( /(?!(?!))/, {
         type: 'group',
-        subtype: 'negative-lookahead',
+        subtype: 'lookahead',
+        negative: true,
         children: [
           {
             type: 'group',
-            subtype: 'negative-lookahead',
+            subtype: 'lookahead',
+            negative: true,
             children: []
           }
         ]
@@ -2476,7 +2491,8 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /(?!a)/, {
         type: 'group',
-        subtype: 'negative-lookahead',
+        subtype: 'lookahead',
+        negative: true,
         children: [
           {
             type: 'value',
@@ -2487,7 +2503,8 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /(?!a|b)/, {
         type: 'group',
-        subtype: 'negative-lookahead',
+        subtype: 'lookahead',
+        negative: true,
         children: [
           {
             type: 'disjunction',
@@ -2511,17 +2528,20 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /(?<!)/, {
         type: 'group',
-        subtype: 'negative-lookbehind',
+        subtype: 'lookbehind',
+        negative: true,
         children: []
       });
 
       assert ( /(?<!(?<!))/, {
         type: 'group',
-        subtype: 'negative-lookbehind',
+        subtype: 'lookbehind',
+        negative: true,
         children: [
           {
             type: 'group',
-            subtype: 'negative-lookbehind',
+            subtype: 'lookbehind',
+            negative: true,
             children: []
           }
         ]
@@ -2529,7 +2549,8 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /(?<!a)/, {
         type: 'group',
-        subtype: 'negative-lookbehind',
+        subtype: 'lookbehind',
+        negative: true,
         children: [
           {
             type: 'value',
@@ -2540,7 +2561,8 @@ describe ( 'RegExp Simple Parser', () => {
 
       assert ( /(?<!a|b)/, {
         type: 'group',
-        subtype: 'negative-lookbehind',
+        subtype: 'lookbehind',
+        negative: true,
         children: [
           {
             type: 'disjunction',
@@ -2914,6 +2936,7 @@ describe ( 'RegExp Simple Parser', () => {
           {
             type: 'group',
             subtype: 'lookahead',
+            negative: false,
             children: [
               {
                 type: 'reference',

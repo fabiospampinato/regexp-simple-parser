@@ -158,28 +158,20 @@ type NodeGroupNonCapturing = NodeGroupBase & {
 };
 
 type NodeGroupLookahead = NodeGroupBase & {
-  subtype: 'lookahead'
+  subtype: 'lookahead',
+  negative: boolean
 };
 
 type NodeGroupLookbehind = NodeGroupBase & {
-  subtype: 'lookbehind'
-};
-
-type NodeGroupNegativeLookahead = NodeGroupBase & {
-  subtype: 'negative-lookahead'
-};
-
-type NodeGroupNegativeLookbehind = NodeGroupBase & {
-  subtype: 'negative-lookbehind'
+  subtype: 'lookbehind',
+  negative: boolean
 };
 
 type NodeGroup = (
   NodeGroupCapturing |
   NodeGroupNonCapturing |
   NodeGroupLookahead |
-  NodeGroupLookbehind |
-  NodeGroupNegativeLookahead |
-  NodeGroupNegativeLookbehind
+  NodeGroupLookbehind
 );
 
 /* MAIN - PROPERTY */
@@ -297,7 +289,7 @@ export type {NodeCharacterClassRange};
 export type {NodeCharacterClassString, NodeCharacterClassStringChild};
 export type {NodeDisjuction};
 export type {NodeDot};
-export type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLookahead, NodeGroupLookbehind, NodeGroupNegativeLookahead, NodeGroupNegativeLookbehind};
+export type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLookahead, NodeGroupLookbehind};
 export type {NodeProperty};
 export type {NodeQuantifier, NodeQuantifierOptional, NodeQuantifierPlus, NodeQuantifierStar, NodeQuantifierRange};
 export type {NodeReference, NodeReferenceIndex, NodeReferenceName};

@@ -14,7 +14,7 @@ import type {NodeCharacterClassStringChild} from './types';
 import type {NodeCharacterClassEscape, NodeCharacterClassRange} from './types';
 import type {NodeDisjuction} from './types';
 import type {NodeDot} from './types';
-import type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLookahead, NodeGroupLookbehind, NodeGroupNegativeLookahead, NodeGroupNegativeLookbehind} from './types';
+import type {NodeGroup, NodeGroupCapturing, NodeGroupNonCapturing, NodeGroupLookahead, NodeGroupLookbehind} from './types';
 import type {NodeProperty} from './types';
 import type {NodeQuantifier, NodeQuantifierOptional, NodeQuantifierPlus, NodeQuantifierStar, NodeQuantifierRange} from './types';
 import type {NodeReference, NodeReferenceIndex, NodeReferenceName} from './types';
@@ -106,10 +106,10 @@ const getGrammar = memoizeByString ( ( flags: string ) => {
   const GroupName = match<NonNullable<NodeGroupCapturing['name']>>( /[$_\p{ID_Start}][$\p{ID_Continue}]*/u, _ => _ );
 
   const Groupable = lazy<Node>( () => Disjuction );
-  const GroupLookahead = and<Node, NodeGroupLookahead>( ['(?=', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'lookahead', children: $1 ? [$1] : [] }) );
-  const GroupLookbehind = and<Node, NodeGroupLookbehind>( ['(?<=', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'lookbehind', children: $1 ? [$1] : [] }) );
-  const GroupNegativeLookahead = and<Node, NodeGroupNegativeLookahead>( ['(?!', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'negative-lookahead', children: $1 ? [$1] : [] }) );
-  const GroupNegativeLookbehind = and<Node, NodeGroupNegativeLookbehind>( ['(?<!', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'negative-lookbehind', children: $1 ? [$1] : [] }) );
+  const GroupLookahead = and<Node, NodeGroupLookahead>( ['(?=', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'lookahead', negative: false, children: $1 ? [$1] : [] }) );
+  const GroupLookbehind = and<Node, NodeGroupLookbehind>( ['(?<=', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'lookbehind', negative: false, children: $1 ? [$1] : [] }) );
+  const GroupNegativeLookahead = and<Node, NodeGroupLookahead>( ['(?!', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'lookahead', negative: true, children: $1 ? [$1] : [] }) );
+  const GroupNegativeLookbehind = and<Node, NodeGroupLookbehind>( ['(?<!', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'lookbehind', negative: true, children: $1 ? [$1] : [] }) );
   const GroupNonCapturingWithFlags = and<Node, NodeGroupNonCapturing>( ['(?', GroupFlags, ':', Groupable, ')'], ([ $1, $2 ]) => ({ type: 'group', subtype: 'non-capturing', flags: $1, children: $2 ? [$2] : [] }) );
   const GroupNonCapturing = and<Node, NodeGroupNonCapturing>( ['(?:', Groupable, ')'], ([ $1 ]) => ({ type: 'group', subtype: 'non-capturing', children: $1 ? [$1] : [] }) );
   const GroupCapturingWithName = and<Node, NodeGroupCapturing>( ['(?<', GroupName, '>', Groupable, ')'], ([ $1, $2 ]) => ({ type: 'group', subtype: 'capturing', name: $1, children: $2 ? [$2] : [] }) );
